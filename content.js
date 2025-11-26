@@ -58,11 +58,10 @@ const brightModeStyles = `
 // Create style element
 let styleElement = null;
 
-// Check and apply the saved mode for this domain
+// Check and apply the global mode setting
 async function checkAndApplyMode() {
-    const domain = window.location.hostname;
-    const result = await chrome.storage.local.get([domain]);
-    const mode = result[domain] || 'auto';
+    const result = await chrome.storage.local.get(['globalMode']);
+    const mode = result.globalMode || 'auto';
     
     applyMode(mode);
 }

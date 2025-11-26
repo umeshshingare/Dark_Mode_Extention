@@ -60,20 +60,21 @@ Or download the ZIP file and extract it.
    - **🌓 Auto** - Website appears in its default state
    - **🌙 Dark** - Inverted colors for night viewing
    - **☀️ Bright** - Enhanced brightness and contrast
-3. **Click your preferred mode** - Changes apply instantly
-4. Your choice is **automatically saved** for that specific domain
+3. **Click your preferred mode** - Changes apply instantly to **ALL open and future websites**
+4. Your choice is **automatically saved globally**
 
 ### Reset Website Settings
 
 1. Click the extension icon
 2. Scroll down and click **"Reset for this site"**
-3. The mode resets to **Auto** and preferences are cleared
+3. The mode resets to **Auto** across all websites
 4. You can set it again anytime
 
-### Per-Site Control
+### Global Theme Control
 
-- Each domain (website) has **independent settings**
-- You can use Dark mode on one site, Bright on another, and Auto on a third
+- The selected theme is **applied to all websites** uniformly
+- All domains (websites) share the **same theme setting**
+- Switch between modes anytime to affect all sites immediately
 - Settings persist until you reset them or clear your browser data
 
 ---
@@ -85,7 +86,7 @@ Or download the ZIP file and extract it.
 
 ### Permissions Used
 - `activeTab` - Allows the extension to access the current active tab
-- `storage` - Saves your mode preferences per domain
+- `storage` - Saves your mode preferences globally
 
 ### How It Works
 
@@ -96,9 +97,9 @@ Or download the ZIP file and extract it.
 
 2. **Popup UI** (`popup.js`)
    - Displays the three-mode selector interface
-   - Detects the current domain
-   - Sends mode change requests to the content script
-   - Manages storage of user preferences
+   - Detects the global mode setting
+   - Sends mode change requests to all open tabs
+   - Manages storage of user preferences globally
 
 3. **Background Service Worker** (`background.js`)
    - Handles extension lifecycle

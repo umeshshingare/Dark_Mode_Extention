@@ -21,10 +21,9 @@ async function init() {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     currentTab = tab;
     
-    // Get stored mode for this domain
-    const domain = new URL(tab.url).hostname;
-    const result = await chrome.storage.local.get([domain]);
-    const currentMode = result[domain] || 'auto';
+    // Get global mode setting
+    const result = await chrome.storage.local.get(['globalMode']);
+    const currentMode = result.globalMode || 'auto';
     
     // Update UI
     updateUI(currentMode);
@@ -58,46 +57,47 @@ function updateUI(mode) {
 
 // Handle mode change
 async function handleModeChange(mode) {
-    const domain = new URL(currentTab.url).hostname;
-    
-    // Save mode preference
-    await chrome.storage.local.set({ [domain]: mode });
+    // Save mode preference globally
+    await chrome.storage.local.set({ globalMode: mode });
     
     // Update UI
     updateUI(mode);
     
-    // Send message to content script
-    try {
-        await chrome.tabs.sendMessage(currentTab.id, {
-            action: 'setMode',
-            mode: mode
-        });
-    } catch (error) {
-        // If content script hasn't loaded, reload the page
-        console.log('Content script not ready, reloading page...');
-        await chrome.tabs.reload(currentTab.id);
+    // Send message to all tabs to apply the new mode
+    const tabs = await chrome.tabs.query({});
+    for (const tab of tabs) {
+        try {
+            await chrome.tabs.sendMessage(tab.id, {
+                action: 'setMode',
+                mode: mode
+            });
+        } catch (error) {
+            // Tab might not have content script, skip it
+            console.log('Could not send message to tab:', tab.id);
+        }
     }
 }
 
 // Handle reset
 async function handleReset() {
-    const domain = new URL(currentTab.url).hostname;
-    
-    // Remove stored mode (defaults to auto)
-    await chrome.storage.local.remove([domain]);
+    // Reset to auto mode globally
+    await chrome.storage.local.set({ globalMode: 'auto' });
     
     // Update UI
     updateUI('auto');
     
-    // Send message to content script to set to auto
-    try {
-        await chrome.tabs.sendMessage(currentTab.id, {
-            action: 'setMode',
-            mode: 'auto'
-        });
-    } catch (error) {
-        // Reload page if content script not ready
-        await chrome.tabs.reload(currentTab.id);
+    // Send message to all tabs to set to auto
+    const tabs = await chrome.tabs.query({});
+    for (const tab of tabs) {
+        try {
+            await chrome.tabs.sendMessage(tab.id, {
+                action: 'setMode',
+                mode: 'auto'
+            });
+        } catch (error) {
+            // Tab might not have content script, skip it
+            console.log('Could not send message to tab:', tab.id);
+        }
     }
 }
 
