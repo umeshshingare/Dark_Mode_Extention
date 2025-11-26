@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark & Bright Mode</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Theme Mode</h1>
+            <p class="subtitle">Choose your preferred mode for this website</p>
+        </div>
+        
+        <div class="mode-selector">
+            <button class="mode-btn" id="autoBtn" data-mode="auto">
+                <span class="mode-icon">🌓</span>
+                <span class="mode-name">Auto</span>
+            </button>
+            <button class="mode-btn" id="darkBtn" data-mode="dark">
+                <span class="mode-icon">🌙</span>
+                <span class="mode-name">Dark</span>
+            </button>
+            <button class="mode-btn" id="brightBtn" data-mode="bright">
+                <span class="mode-icon">☀️</span>
+                <span class="mode-name">Bright</span>
+            </button>
+        </div>
+        
+        <div class="info">
+            <p id="statusText">Current mode: Auto</p>
+        </div>
+        
+        <div class="footer">
+            <button id="resetBtn" class="reset-btn">Reset for this site</button>
+        </div>
+    </div>
+    
+    <script src="popup.js"></script>
+</body>
+</html>
+
+
