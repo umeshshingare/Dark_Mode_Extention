@@ -4,7 +4,7 @@ A versatile Chrome extension that allows you to switch between **Dark Mode**, **
 
 ## 🎯 Features
 
-- 🌙 **Dark Mode** - Invert colors for comfortable viewing in low light.
+- 🌙 **Dark Mode** - Invert colors for comfortable viewing in low light
 - ☀️ **Bright Mode** - Enhance brightness and contrast for better daytime visibility
 - 🌓 **Auto Mode** - Use the website in its default appearance
 - 💾 **Per-domain settings** - Remembers your preference for each website independently
